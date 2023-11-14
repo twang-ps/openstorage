@@ -805,6 +805,46 @@
         ],
         "type": "string"
       },
+      "apiDefragJob": {
+        "properties": {
+          "max_duration_hours": {
+            "format": "double",
+            "type": "number"
+          },
+          "max_nodes_in_parallel": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "node_selector": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "nodes_exclude": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "nodes_select": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "running_nodes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "schedule_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "apiDiagsCollectionStatus": {
         "properties": {
           "message": {
@@ -1193,6 +1233,9 @@
             "title": "CreateTime is the time the job was created",
             "type": "string"
           },
+          "defrag": {
+            "$ref": "#/components/schemas/apiDefragJob"
+          },
           "drain_attachments": {
             "$ref": "#/components/schemas/apiNodeDrainAttachmentsJob"
           },
@@ -1254,13 +1297,14 @@
       },
       "apiJobType": {
         "default": "UNSPECIFIED_TYPE",
-        "description": "- UNSPECIFIED_TYPE: Unspecified\n - NONE: None\n - DRAIN_ATTACHMENTS: Job for draining volume attachments\n - CLOUD_DRIVE_TRANSFER: Job for transferring cloud drives between nodes\n - COLLECT_DIAGS: Job for collecting diags from the cluster nodes",
+        "description": "- UNSPECIFIED_TYPE: Unspecified\n - NONE: None\n - DRAIN_ATTACHMENTS: Job for draining volume attachments\n - CLOUD_DRIVE_TRANSFER: Job for transferring cloud drives between nodes\n - COLLECT_DIAGS: Job for collecting diags from the cluster nodes\n - DEFRAG: Job for storage defragmentation on cluster nodes",
         "enum": [
           "UNSPECIFIED_TYPE",
           "NONE",
           "DRAIN_ATTACHMENTS",
           "CLOUD_DRIVE_TRANSFER",
-          "COLLECT_DIAGS"
+          "COLLECT_DIAGS",
+          "DEFRAG"
         ],
         "title": "Type are the supported job types",
         "type": "string"
@@ -7763,7 +7807,7 @@
         "operationId": "Enumerate",
         "parameters": [
           {
-            "description": "Type if specified will list the jobs of the provided type.\n\n - UNSPECIFIED_TYPE: Unspecified\n - NONE: None\n - DRAIN_ATTACHMENTS: Job for draining volume attachments\n - CLOUD_DRIVE_TRANSFER: Job for transferring cloud drives between nodes\n - COLLECT_DIAGS: Job for collecting diags from the cluster nodes",
+            "description": "Type if specified will list the jobs of the provided type.\n\n - UNSPECIFIED_TYPE: Unspecified\n - NONE: None\n - DRAIN_ATTACHMENTS: Job for draining volume attachments\n - CLOUD_DRIVE_TRANSFER: Job for transferring cloud drives between nodes\n - COLLECT_DIAGS: Job for collecting diags from the cluster nodes\n - DEFRAG: Job for storage defragmentation on cluster nodes",
             "in": "query",
             "name": "type",
             "required": false,
@@ -7774,7 +7818,8 @@
                 "NONE",
                 "DRAIN_ATTACHMENTS",
                 "CLOUD_DRIVE_TRANSFER",
-                "COLLECT_DIAGS"
+                "COLLECT_DIAGS",
+                "DEFRAG"
               ],
               "type": "string"
             }
@@ -7811,7 +7856,7 @@
             }
           },
           {
-            "description": "Type of the job.\n\n - UNSPECIFIED_TYPE: Unspecified\n - NONE: None\n - DRAIN_ATTACHMENTS: Job for draining volume attachments\n - CLOUD_DRIVE_TRANSFER: Job for transferring cloud drives between nodes\n - COLLECT_DIAGS: Job for collecting diags from the cluster nodes",
+            "description": "Type of the job.\n\n - UNSPECIFIED_TYPE: Unspecified\n - NONE: None\n - DRAIN_ATTACHMENTS: Job for draining volume attachments\n - CLOUD_DRIVE_TRANSFER: Job for transferring cloud drives between nodes\n - COLLECT_DIAGS: Job for collecting diags from the cluster nodes\n - DEFRAG: Job for storage defragmentation on cluster nodes",
             "in": "query",
             "name": "type",
             "required": false,
@@ -7822,7 +7867,8 @@
                 "NONE",
                 "DRAIN_ATTACHMENTS",
                 "CLOUD_DRIVE_TRANSFER",
-                "COLLECT_DIAGS"
+                "COLLECT_DIAGS",
+                "DEFRAG"
               ],
               "type": "string"
             }
